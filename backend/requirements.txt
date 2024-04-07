@@ -1,0 +1,7 @@
+langchain==1.1.0
+langchain_anthropic==1.0.0
+selenium==4.0.0
+selenium_stealth==2.0.0
+bs4==0.0.1
+fastapi==0.68.0
+uvicorn
