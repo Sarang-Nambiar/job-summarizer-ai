@@ -1,45 +1,70 @@
-import { Button, CircularProgress } from "@mui/material";
+import { Button } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import "./App.css";
-import chatbot_logo from "./assets/favicon.svg";
-import { Suspense, useState } from "react";
-import axios from "axios";
-import initFields from "./constants";
+import chatbot_logo from "./assets/chatbot.png";
+import { goTo } from "react-chrome-extension-router";
+import Summary from "./Components/Summary";
+import Settings from "./Components/Settings";
+import "@fontsource/inter"; // Defaults to weight 400
+import { useEffect, useState } from "react";
+import initFields, { IField } from "./constants";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-  const [loading, setLoading] = useState(false);
-  const [openSettings, setOpenSettings] = useState(false);
-  const [fields, setFields] = useState(initFields); 
-
-  const onClick = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      let url = tabs[0].url;
-      // use `url` here inside the callback because it's asynchronous!
-      axios.get("http://localhost:8000/extract/", {params : { url }}).then((response) => {
-        setLoading(true);
-        console.log(response);
-      })
-    });
+  const btnStyle = {
+    backgroundImage: "linear-gradient(90deg, #cc2b5e, #753a88)",
+    borderRadius: "20px",
+    fontWeight: "400",
   };
-  return !loading ? (
+
+  const [fields, setFields] = useState<IField[]>(initFields);
+
+  useEffect(() => {
+    const fetchFields = async () => {
+      let result : any = await new Promise((resolve) => {
+        chrome.storage.local.get(["selectedFields"], (result) => {
+          resolve(result);
+        });
+      });
+
+      if (result.selectedFields !== undefined) {
+        setFields(result.selectedFields);
+      }
+    };
+
+    fetchFields();
+    console.log(fields)
+  }, []);
+
+  return (
     <>
-      <div className="settings-icon">
-        <SettingsIcon onClick={() => setOpenSettings(true)}/>
+      <ToastContainer pauseOnHover={false} draggable={false} />
+      <div
+        className="settings-icon"
+        onClick={() => goTo(Settings, { fields, setFields })}
+      >
+        <SettingsIcon />
       </div>
+
       <div className="container">
-        <img src={chatbot_logo} alt="Chatbot logo" width="15%" />
-        <h2>Job Description Summariser</h2>
-        <Button variant="contained" color="primary" onClick={onClick}>
-          Search this website
+        <img src={chatbot_logo} alt="Chatbot logo" width="60%" />
+        <h1>
+          JobSummar
+          <span className="grad-text" data-text="AI">
+            AI
+          </span>
+        </h1>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => goTo(Summary, { fields })}
+          sx={btnStyle}
+        >
+          Summarise
         </Button>
       </div>
     </>
-  ) : (
-    <Suspense fallback={<CircularProgress />}>
-      <div className="container">
-        <CircularProgress />
-      </div>
-    </Suspense>
   );
 }
 

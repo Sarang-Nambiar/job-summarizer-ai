@@ -1,4 +1,9 @@
-const fields = [
+export interface IField{
+    name: string,
+    value: boolean
+}
+
+const fields : Array<IField> = [
     {
         name: "About the company",
         value: true
