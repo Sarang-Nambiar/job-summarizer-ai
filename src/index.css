@@ -3,7 +3,13 @@
   height: 300px !important;
   background-color: #000;
   color: #fff;
-  font-family: 'Inter';
+}
+
+.container{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
 }
 
 body{
@@ -13,5 +19,14 @@ body{
 
 h1{
   font-size: 2rem;
+  margin: 0;
+}
+
+h2{
+  margin: 0;
+  padding: 0;
+}
+
+p{
   margin: 0;
 }

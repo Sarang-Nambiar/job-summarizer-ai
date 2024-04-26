@@ -1,4 +1,4 @@
-.container{
+.main-container{
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -36,4 +36,10 @@
   right: 0;
   padding: 1rem;
   cursor: pointer;
+}
+
+.bubble{
+  background-color: #323E47;
+  border-radius: 1.5rem;
+  padding: 1rem 1.5rem;
 }

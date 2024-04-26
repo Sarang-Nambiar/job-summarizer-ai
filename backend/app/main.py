@@ -1,27 +1,40 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
 from scraper import extract_data
+from fastapi.middleware.cors import CORSMiddleware
 from ai_extractor import extract_with_ai
 from schema import JobFields
 import uvicorn
 
 app = FastAPI()
 
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+class Item(BaseModel):
+    url: str
+    fields: list
+
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
 
-@app.get("/extract/")
-def extract(url: str):
-    MAX_TOKENS = 4000
-    job_description = extract_data(url)
+@app.post("/extract/")
+def extract(item: Item):
+    job_description = extract_data(item.url)
+    schema = JobFields.extract_schema(item.fields)
 
     if "error" in job_description:
         return {"error": job_description["error"]}
 
-    schema = JobFields()
-    data = extract_with_ai(job_description["description"][:MAX_TOKENS], schema.model_dump())
-
-    return {"data": data}
+    data = extract_with_ai(job_description, schema)
+    return {"summary": data}
 
 # For running the uvicorn server
 if __name__ == "__main__":  

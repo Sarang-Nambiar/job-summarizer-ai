@@ -3,13 +3,13 @@ export interface IField{
     value: boolean
 }
 
-const fields : Array<IField> = [
+const fields : IField[] = [
     {
-        name: "About the company",
+        name: "About The Company",
         value: true
     },
     {
-        name: "Company name",
+        name: "Company Name",
         value: true
     },
     {

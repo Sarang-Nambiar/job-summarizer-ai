@@ -11,30 +11,24 @@ import initFields, { IField } from "./constants";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+export const btnStyle = {
+  backgroundImage: "linear-gradient(90deg, #cc2b5e, #753a88)",
+  borderRadius: "20px",
+  fontSize: "1.1rem",
+  textTransform: "none",
+  fontWeight: "500",
+};
+
 function App() {
-  const btnStyle = {
-    backgroundImage: "linear-gradient(90deg, #cc2b5e, #753a88)",
-    borderRadius: "20px",
-    fontWeight: "400",
-  };
 
   const [fields, setFields] = useState<IField[]>(initFields);
 
   useEffect(() => {
-    const fetchFields = async () => {
-      let result : any = await new Promise((resolve) => {
-        chrome.storage.local.get(["selectedFields"], (result) => {
-          resolve(result);
-        });
-      });
-
-      if (result.selectedFields !== undefined) {
+    chrome.storage.local.get("selectedFields", (result) => {
+      if (result.selectedFields) {
         setFields(result.selectedFields);
       }
-    };
-
-    fetchFields();
-    console.log(fields)
+    });
   }, []);
 
   return (
@@ -47,8 +41,8 @@ function App() {
         <SettingsIcon />
       </div>
 
-      <div className="container">
-        <img src={chatbot_logo} alt="Chatbot logo" width="60%" />
+      <div className="main-container">
+        <img src={chatbot_logo} alt="Chatbot logo" width="50%" />
         <h1>
           JobSummar
           <span className="grad-text" data-text="AI">
@@ -58,10 +52,12 @@ function App() {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => goTo(Summary, { fields })}
+          onClick={() => {
+            goTo(Summary, { fields })
+          }}
           sx={btnStyle}
         >
-          Summarise
+          Summarise this job
         </Button>
       </div>
     </>
