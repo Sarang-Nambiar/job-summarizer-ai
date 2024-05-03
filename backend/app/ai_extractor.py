@@ -23,6 +23,7 @@ def extract_with_ai(job_description: str, schema: JobFields):
     About the company: {schema.about_the_company}
     Job title: {schema.job_title}
     Job description: {schema.job_description}
+    Location: {schema.location}
     Company Name: {schema.company_name}
     Job type: {schema.job_type}
     Qualifications: {schema.qualifications}
@@ -48,7 +49,7 @@ def extract_with_ai(job_description: str, schema: JobFields):
     
     summary = {}
     for r in response:
-        summary.update(json.loads(r.content))
+        summary.update(json.loads(r.content)) # update the summary with the latest response content
     
     return summary
 

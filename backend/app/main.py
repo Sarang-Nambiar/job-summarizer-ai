@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from scraper import extract_data
 from fastapi.middleware.cors import CORSMiddleware
 from ai_extractor import extract_with_ai
-from schema import JobFields
+from schema import extract_schema
 import uvicorn
 
 app = FastAPI()
@@ -27,9 +27,10 @@ def read_root():
 
 @app.post("/extract/")
 def extract(item: Item):
+    print(item.fields)
     job_description = extract_data(item.url)
-    schema = JobFields.extract_schema(item.fields)
-
+    schema = extract_schema(item.fields)
+    print(schema)
     if "error" in job_description:
         return {"error": job_description["error"]}
 

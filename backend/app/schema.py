@@ -6,6 +6,7 @@ class JobFields(BaseModel):
     job_description: bool = True
     company_name: bool = True
     job_type: bool = True
+    location: bool = True
     qualifications: bool = True
     benefits: bool = True
     salary: bool = True
@@ -17,12 +18,18 @@ class JobFields(BaseModel):
         self.job_description = data.get("job_description", True)
         self.company_name = data.get("company_name", True)
         self.job_type = data.get("job_type", True)
+        self.location = data.get("location", True)
         self.qualifications = data.get("qualifications", False)
         self.benefits = data.get("benefits", True)
         self.salary = data.get("salary", True)
-    
-    def extract_schema(schema):
-        fields = {}
-        for field in schema:
-            fields[field["name"]] = field["value"]
-        return JobFields(**fields)
+
+# Extract the schema from the fields
+def extract_schema(schema):
+    fields = {}
+    for field in schema:
+        fields[name_to_key(field["name"])] = field["value"]
+    return JobFields(**fields)
+
+# Convert the name to a key
+def name_to_key(name):
+    return name.lower().replace(" ", "_")
