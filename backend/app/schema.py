@@ -21,7 +21,7 @@ class JobFields(BaseModel):
         self.location = data.get("location", True)
         self.qualifications = data.get("qualifications", False)
         self.benefits = data.get("benefits", True)
-        self.salary = data.get("salary", True)
+        self.salary = data.get("salary/pay", True)
 
 # Extract the schema from the fields
 def extract_schema(schema):

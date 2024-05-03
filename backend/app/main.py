@@ -27,10 +27,10 @@ def read_root():
 
 @app.post("/extract/")
 def extract(item: Item):
-    print(item.fields)
+    if "indeed.com" not in item.url:
+        return {"error": "Invalid URL. Please provide a valid Indeed job description URL."}
     job_description = extract_data(item.url)
     schema = extract_schema(item.fields)
-    print(schema)
     if "error" in job_description:
         return {"error": job_description["error"]}
 

@@ -32,7 +32,9 @@ def extract_with_ai(job_description: str, schema: JobFields):
 
     If a field is marked as True and isn't present in the job description, please return an empty string.
     Make sure to send the output in stringified JSON format with the content beside the respective field names.
+    Make sure to add emojis to the field name for better understanding.
     Give the output straight to the point without any introductions.
+    Make sure the content is in bullet points using html tags.
     """
     human = "{job_description}"
     content = job_description["description"]
@@ -49,7 +51,8 @@ def extract_with_ai(job_description: str, schema: JobFields):
     
     summary = {}
     for r in response:
-        summary.update(json.loads(r.content)) # update the summary with the latest response content
+        print(r.content)
+        summary.update(json.loads(r.content.replace("\n", ""))) # update the summary with the latest response content
     
     return summary
 
