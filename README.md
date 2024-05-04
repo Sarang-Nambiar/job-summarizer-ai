@@ -49,5 +49,5 @@
 4. **Finalize Installation:**
    - Your JobSummarAI extension will now appear in your browser, ready for use. 🎉
 
-
+Sms icons created by riajulislam - Flaticon: https://www.flaticon.com/free-icons/sms
 
