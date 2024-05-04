@@ -10,11 +10,11 @@ import json
 load_dotenv()
 
 # Load the API key from the .env file
-API_KEY = os.getenv("ANTHROPIC_KEY")
+API_KEY = os.getenv("API_KEY")
 MAX_TOKENS = 3900
 
 def extract_with_ai(job_description: str, schema: JobFields):
-    tokenizer = GPT2TokenizerFast.from_pretrained("gpt2")
+    tokenizer = GPT2TokenizerFast.from_pretrained("gpt2") # hugging face tokenizer
     model = ChatAnthropic(model_name="claude-3-haiku-20240307", anthropic_api_key=API_KEY, temperature=0)
 
     system = f"""
