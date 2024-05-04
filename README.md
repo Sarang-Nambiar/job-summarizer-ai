@@ -1,30 +1,53 @@
-# React + TypeScript + Vite
+## JobSummarAI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### How to Run:
 
-Currently, two official plugins are available:
+#### Backend:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. **Install Required Modules:**
+   - Navigate to the `backend/` directory. 📁
+   - Install the required modules listed in `requirements.txt` by running:
+     ```
+     pip install -r requirements.txt
+     ```
 
-## Expanding the ESLint configuration
+2. **Set Up Environment Variables:**
+   - Go into the `backend/app` directory. 📂
+   - Create a `.env` file if not already present.
+   - Add your Claude AI API key to the `.env` file:
+     ```
+     API_KEY=your_api_key_here
+     ```
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+3. **Run the Backend:**
+   - After completing the above steps, execute the following command from the current directory to run the backend:
+     ```
+     python3 ./main.py
+     ```
 
-- Configure the top-level `parserOptions` property like this:
+4. **Access the API:**
+   - Once the backend is running, the API endpoints will be accessible at `https://localhost:8000`. 🚀
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+#### Frontend:
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+1. **Navigate to the Parent Directory:**
+   - Go to the parent directory of the repository where the frontend files are located. 📁
+
+2. **Initialize and Build with npm:**
+   - Run the following commands in the terminal:
+     ```
+     npm init
+     npm run build
+     ```
+
+3. **Load Extension in Chromium Browser:**
+   - Once the `dist` folder appears after building, open your favorite Chromium-based browser. 🌐
+   - Navigate to `chrome://extensions`.
+   - If not already enabled, turn on developer mode. ⚙️
+   - Click on "Load unpacked" and upload the `dist` folder. 📂
+   
+4. **Finalize Installation:**
+   - Your JobSummarAI extension will now appear in your browser, ready for use. 🎉
+
+
+
