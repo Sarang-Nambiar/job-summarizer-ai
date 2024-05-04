@@ -37,6 +37,8 @@ def extract_with_ai(job_description: str, schema: JobFields):
     Make sure the content is in bullet points using html tags.
     """
     human = "{job_description}"
+
+    # Split the job description into chunks
     content = job_description["description"]
     text_splitter = CharacterTextSplitter.from_huggingface_tokenizer(tokenizer, chunk_size=MAX_TOKENS, chunk_overlap=0)
 
@@ -51,7 +53,6 @@ def extract_with_ai(job_description: str, schema: JobFields):
     
     summary = {}
     for r in response:
-        print(r.content)
         summary.update(json.loads(r.content.replace("\n", ""))) # update the summary with the latest response content
     
     return summary
